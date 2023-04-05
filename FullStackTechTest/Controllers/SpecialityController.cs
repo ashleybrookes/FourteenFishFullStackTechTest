@@ -34,7 +34,7 @@ namespace FullStackTechTest.Controllers
         // GET: SpecialityController/Create
         public async Task<IActionResult> Create()
         {
-            var model = await DetailsViewModel.CreateAsync(0, false, false, _specialityRepository);
+            var model = await DetailsViewModel.CreateAsync(0, false, true, _specialityRepository);
             return View("Details", model);
         }
 
@@ -47,10 +47,18 @@ namespace FullStackTechTest.Controllers
 
         // POST: SpecialityController/Edit/specialityId=5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int specialityId, [FromForm] DetailsViewModel model)
         {
-            await _specialityRepository.SaveAsync(model.speciality);
+            //TODO : model.IsEditing and model.IsInserting is always false! AH need to find out why
+
+            if (model.speciality.Id > 0)
+            {
+                await _specialityRepository.SaveAsync(model.speciality);
+            } else
+            {
+                model.speciality.Id = await _specialityRepository.InsertAsync(model.speciality);
+            }
+
             return RedirectToAction("Details", new { specialityId = model.speciality.Id });
         }
 
