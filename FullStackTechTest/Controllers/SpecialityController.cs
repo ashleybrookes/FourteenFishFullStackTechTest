@@ -2,6 +2,7 @@
 using FullStackTechTest.Models.SpecialityViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 
 namespace FullStackTechTest.Controllers
 {
@@ -23,52 +24,34 @@ namespace FullStackTechTest.Controllers
             return View(model);
         }
 
-        // GET: SpecialityController/Details/5
-        public ActionResult Details(int id)
+        // GET: SpecialityController/Details/specialityId=5
+        public async Task<IActionResult> Details(int specialityId)
         {
-            return View();
+            var model = await DetailsViewModel.CreateAsync(specialityId, false, false, _specialityRepository);
+            return View(model);
         }
 
         // GET: SpecialityController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var model = await DetailsViewModel.CreateAsync(0, false, false, _specialityRepository);
+            return View("Details", model);
         }
 
-        // POST: SpecialityController/Create
+        // GET: SpecialityController/Edit/specialityId=5
+        public async Task<IActionResult> Edit(int specialityId)
+        {
+            var model = await DetailsViewModel.CreateAsync(specialityId, true, false, _specialityRepository);
+            return View("Details", model);
+        }
+
+        // POST: SpecialityController/Edit/specialityId=5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Edit(int specialityId, [FromForm] DetailsViewModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SpecialityController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: SpecialityController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _specialityRepository.SaveAsync(model.speciality);
+            return RedirectToAction("Details", new { specialityId = model.speciality.Id });
         }
 
         // GET: SpecialityController/Delete/5

@@ -11,7 +11,7 @@
         <tbody>
             @foreach (var Speciality in Model.SpecialityList)
             {
-                <tr class="clickable-row" data-href="@Url.Action("Details", new { id = Speciality.Id})">
+                <tr class="clickable-row" data-href="@Url.Action("Details", new { specialityId = Speciality.Id})">
                     <td>@Speciality.Id</td>
                     <td>@Speciality.SpecialityName</td>
                 </tr>

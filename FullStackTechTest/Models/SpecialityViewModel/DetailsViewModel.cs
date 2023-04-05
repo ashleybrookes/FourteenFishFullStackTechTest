@@ -10,14 +10,28 @@ public class DetailsViewModel
 
     public bool IsInserting { get; set; }
 
-    public static async Task<DetailsViewModel> CreateAsync(int specialityId, bool isEditing, bool IsInserting, ISpecialityRepository specialityRepository)
+    public static async Task<DetailsViewModel> CreateAsync(int specialityId, bool isEditing, bool isInserting, ISpecialityRepository specialityRepository)
     {
-        var model = new DetailsViewModel
+        var model = new DetailsViewModel { };
+        if (specialityId > 0)
         {
-            speciality = await specialityRepository.GetByIdAsync(specialityId),
-            IsEditing = isEditing,
-            IsInserting = IsInserting
-        };
+            model = new DetailsViewModel
+            {
+                speciality = await specialityRepository.GetByIdAsync(specialityId),
+                IsEditing = isEditing,
+                IsInserting = isInserting
+            };
+        } else
+        {
+            model = new DetailsViewModel
+            {
+                speciality = new Speciality(),
+                IsEditing = isEditing,
+                IsInserting = isInserting
+            };
+
+        }
+        
         return model;
     }
 }
