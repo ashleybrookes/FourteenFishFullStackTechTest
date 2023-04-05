@@ -19,8 +19,6 @@ public class Person
     public string LastName { get; set; }
     
     [Required]
-    [MinLength(7)]
-    [MaxLength(7)]
     public int GMC { get; set; }
 
 }
