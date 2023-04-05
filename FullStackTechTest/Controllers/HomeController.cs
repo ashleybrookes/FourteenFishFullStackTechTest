@@ -5,6 +5,7 @@ using FullStackTechTest.Models.Home;
 using FullStackTechTest.Models.Shared;
 using Models;
 using System.Text.Json;
+using System.Configuration;
 
 namespace FullStackTechTest.Controllers;
 
@@ -66,10 +67,18 @@ public class HomeController : Controller
                     filePaths.Add(filePath);
                     using (var stream = formFile.OpenReadStream())
                     {
-                        List<PersonWithAddress>? newPersonWithAddresses = JsonSerializer.Deserialize<List<PersonWithAddress>>(stream, jsonoptions);
+                        List<PersonWithAddress>? newPersonWithAddresses = null;
+                        try
+                        {
+                            newPersonWithAddresses = JsonSerializer.Deserialize<List<PersonWithAddress>>(stream, jsonoptions);
+                        }
+                        catch (Exception ex)
+                        {
+                            return RedirectToAction("Error", "Home", new { errorMessage = ex.Message});
+                        }
+                        
                         if (newPersonWithAddresses != null )
                         {
-                            
                             await ImportPersons(newPersonWithAddresses);
                         }
                     }
@@ -104,6 +113,11 @@ public class HomeController : Controller
             {
                 if (newPersonWithAddress.GMC.ToString().Length == 7)
                 {
+                    //Trim the firstname to less than 50 chars
+                    if (newPersonWithAddress.FirstName.Length > 50) newPersonWithAddress.FirstName =  newPersonWithAddress.FirstName.Substring(0, 50);
+                    //Trim the firstname to less than 50 chars
+                    if (newPersonWithAddress.LastName.Length > 50) newPersonWithAddress.LastName = newPersonWithAddress.LastName.Substring(0, 50);
+
                     //check if the person exists by GMC number, the import data doesn't have personId
                     Person personCheck = await _personRepository.GetByGMCAsync(newPersonWithAddress.GMC);
                     if (personCheck.FirstName != null)
@@ -151,8 +165,13 @@ public class HomeController : Controller
             // look through all the addresses this person has
             foreach (Address newAddress in newPersonWithAddress.address)
             {
+                //trim city to 100 chars
+                if (newAddress.City.Length > 100) newAddress.City = newAddress.City.Substring(0, 100);
+                //trim postcode to 8 chars
+                if (newAddress.Postcode.Length > 8) newAddress.Postcode = newAddress.Postcode.Substring(0, 8);
+                //trim line1 to 200 chars
+                if (newAddress.Line1.Length > 200) newAddress.Line1 = newAddress.Line1.Substring(0, 200);
                 //check to see if the address already exists - use a fuzzy match on the postcode
-
                 Address addressCheck = await _addressRepository.GetForPersonIdAsync(newPersonWithAddress.Id);
                 if (addressCheck.Postcode != null) {
                     if (addressCheck.Postcode.ToLower().Replace(" ", String.Empty) == newAddress.Postcode.ToLower().Replace(" ", String.Empty))
@@ -178,9 +197,9 @@ public class HomeController : Controller
 
     
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public IActionResult Error(string errorMessage = "")
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier , ErrorMessage = errorMessage});
     }
 
     
