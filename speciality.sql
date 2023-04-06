@@ -17,5 +17,5 @@ INSERT INTO speciality (`Id`,`SpecialityName`) VALUES (10, 'Psychiatry');
 create table peoplespeciality (
 Id INT PRIMARY KEY auto_increment,
 PersonID INT NOT NULL,
-specialityId INT NOT NULL
+SpecialityId INT NOT NULL
 );
