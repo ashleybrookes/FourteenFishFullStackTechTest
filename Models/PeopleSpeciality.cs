@@ -10,6 +10,9 @@ public class PeopleSpeciality
     
     [Required]
     public int SpecialityId { get; set; }
+    
+    [Required]
+    public string SpecialityName { get; set; }
 
     [Required]
     public int PersonId { get; set; }
