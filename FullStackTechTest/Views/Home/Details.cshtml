@@ -5,6 +5,7 @@
 }
 
 <div class="container">
+    <h2>Profile</h2>
     <div class="pb-4">
         @if (!Model.IsEditing)
         {
@@ -24,6 +25,7 @@
 
     @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { @class = "form-inline" }))
     {
+        /* The hidden inputs ensure the address.Id and address.personId are posted within model in the edit method */
         <input type="hidden" name="address.id" value="@Model.Address.Id" />
         <input type="hidden" name="address.personId" value="@Model.Address.PersonId" />
         

@@ -20,17 +20,17 @@
             
             <a href="@Url.Action("Edit", new { specialityId = Model.speciality.Id })" class="btn btn-primary" role="button">Edit</a>
         } 
-
+        @if (Model.IsInserting || Model.IsEditing)
+        {
+            <a href="@Url.Action("Details", new { specialityId = Model.speciality.Id })" class="btn btn-primary" role="button">Cancel</a>
+        }
         @if (!Model.IsInserting || !Model.IsEditing)
         {
 
             <a onclick="DeleteSpeciality(@Model.speciality.Id);" class="btn btn-danger" role="button">Delete</a>
         }
 
-        @if (Model.IsInserting || Model.IsEditing)
-        {
-            <a href="@Url.Action("Details", new { specialityId = Model.speciality.Id })" class="btn btn-primary" role="button">Cancel</a>
-        }
+        
         
     </div>
 

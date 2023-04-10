@@ -19,4 +19,9 @@ body {
 
 input::file-selector-button, input[type=submit] {
     background-color: #cf2d81;
+    color:#ffffff;
+}
+
+.clickable-row:hover {
+    cursor:pointer;
 }
