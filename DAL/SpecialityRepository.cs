@@ -77,10 +77,10 @@ public class SpecialityRepository : ISpecialityRepository
         }
     }
 
-    public async Task DeleteAsync(Speciality speciality)
+    public async Task DeleteByIdAsync(int specialityId)
     {
         var sql = new StringBuilder();
-        sql.AppendLine("DELETE speciality");
+        sql.AppendLine("DELETE FROM speciality");
         sql.AppendLine("WHERE Id = @specialityId");
 
         await using (var connection = new MySqlConnection(Config.DbConnectionString))
@@ -88,8 +88,7 @@ public class SpecialityRepository : ISpecialityRepository
             await connection.OpenAsync();
 
             var command = new MySqlCommand(sql.ToString(), connection);
-            command.Parameters.AddWithValue("SpecialityName", speciality.SpecialityName);
-            command.Parameters.AddWithValue("specialityId", speciality.Id);
+            command.Parameters.AddWithValue("specialityId", specialityId);
 
             await command.ExecuteNonQueryAsync();
         }

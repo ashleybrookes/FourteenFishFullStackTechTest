@@ -9,7 +9,7 @@ public interface ISpecialityRepository
 
     Task SaveAsync(Speciality speciality);
 
-    Task DeleteAsync(Speciality speciality);
+    Task DeleteByIdAsync(int specialityId);
 
     Task<int> InsertAsync(Speciality speciality);
 }

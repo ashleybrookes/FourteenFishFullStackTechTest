@@ -10,11 +10,13 @@ namespace FullStackTechTest.Controllers
     {
         private readonly ILogger<SpecialityController> _logger;
         private readonly ISpecialityRepository _specialityRepository;
+        private readonly IPersonSpecialityRepository _personSpecialityRepository;
         
-        public SpecialityController(ILogger<SpecialityController> logger, ISpecialityRepository specialityRepository)
+        public SpecialityController(ILogger<SpecialityController> logger, ISpecialityRepository specialityRepository, IPersonSpecialityRepository personSpecialityRepository)
         {
             _logger = logger;
             _specialityRepository = specialityRepository;
+            _personSpecialityRepository = personSpecialityRepository;
         }
 
         // GET: SpecialityController
@@ -62,25 +64,21 @@ namespace FullStackTechTest.Controllers
             return RedirectToAction("Details", new { specialityId = model.speciality.Id });
         }
 
-        // GET: SpecialityController/Delete/5
-        public ActionResult Delete(int id)
+        // DELETE: SpecialityController/Delete/5
+        
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int Id)
         {
-            return View();
-        }
-
-        // POST: SpecialityController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            if (Id == 0)
             {
-                return RedirectToAction(nameof(Index));
+                return NoContent();
             }
-            catch
-            {
-                return View();
-            }
+            //Delete the PersonSpeciality data
+            await _personSpecialityRepository.DeleteBySpecialityIdAsync(Id);
+            //Delete the Speciality Data
+            await _specialityRepository.DeleteByIdAsync(Id);
+            //TODO: pass through a nice message that its been deleted
+            return Ok();
         }
     }
 }

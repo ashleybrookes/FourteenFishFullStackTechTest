@@ -14,7 +14,7 @@ public interface IPersonSpecialityRepository
 
     //Task SaveAsync(PersonSpeciality personSpeciality);
 
-    //Task DeleteAsync(PersonSpeciality personSpeciality);
+    Task DeleteBySpecialityIdAsync(int specialityId);
 
     //Task DeleteByPersonIdAsync(int personId);
 
