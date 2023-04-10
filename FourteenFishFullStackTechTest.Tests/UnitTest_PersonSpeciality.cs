@@ -27,7 +27,7 @@ namespace FourteenFishFullStackTechTest.Tests
         /// </summary>
         /// <returns></returns>
         [Test]
-        public async Task TestPersonSpecialitycheckBoxList_personId_1()
+        public async Task TestPersonSpecialitycheckBoxList_PersonWithSpecialityData()
         {
             Setup();
 
@@ -96,7 +96,6 @@ namespace FourteenFishFullStackTechTest.Tests
             };
             //using a mock to set the result (data) from the ListAllAsync method in SpecialityRepository
             _specialityRepositoryMock.Setup(x => x.ListAllAsync()).ReturnsAsync(specialityList);
-
 
             List<CheckBoxModel> result_specialityCheckBoxList = await DetailsViewModel.CreateCheckBoxList(_personId, _personSpecialityRepositoryMock.Object, _specialityRepositoryMock.Object);
 
