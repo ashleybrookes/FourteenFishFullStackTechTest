@@ -39,19 +39,32 @@
             <input type="number" name="person.gmc" value="@Model.Person.GMC" class="@(Model.IsEditing ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : "readonly")/>
         </div>
 
+        <h4>Address:</h4>
+
         <div class="form-group pb-1">
             <label>Address:</label>
             <input type="text" name="address.line1" value="@Model.Address.Line1" class="@(Model.IsEditing ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : "readonly")/>
         </div>
         <div class="form-group pb-1">
-            <label>City:</label>
+            <label class="form-label">City:</label>
             <input type="text" name="address.city" value="@Model.Address.City" class="@(Model.IsEditing ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : "readonly")/>
         </div>
         <div class="form-group pb-4">
             <label>Postcode:</label>
             <input type="text" name="address.postcode" value="@Model.Address.Postcode" class="@(Model.IsEditing ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : "readonly")/>
         </div>
-        
+
+        <h4>Specialities</h4>
+        @foreach (var item in Model.SpecialityCheckBoxList)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="@item.Value" id="chk@(item.Value)" checked="@item.IsChecked" @(Model.IsEditing ? "" : "disabled") >
+                <label class="form-check-label" for="chk@(item.Value)">
+                    @item.Text
+                </label>
+            </div>
+        }
+
         @if (Model.IsEditing)
         {
             <div>

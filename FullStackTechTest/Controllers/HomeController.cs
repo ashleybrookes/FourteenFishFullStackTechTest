@@ -13,12 +13,16 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IPersonRepository _personRepository;
     private readonly IAddressRepository _addressRepository;
+    private readonly IPersonSpecialityRepository _personSpecialityRepository;
+    private readonly ISpecialityRepository _specialityRepository;
 
-    public HomeController(ILogger<HomeController> logger, IPersonRepository personRepository, IAddressRepository addressRepository)
+    public HomeController(ILogger<HomeController> logger, IPersonRepository personRepository, IAddressRepository addressRepository, IPersonSpecialityRepository personSpecialityRepository, ISpecialityRepository specialityRepository)
     {
         _logger = logger;
         _personRepository = personRepository;
         _addressRepository = addressRepository;
+        _personSpecialityRepository = personSpecialityRepository;
+        _specialityRepository = specialityRepository;
     }
 
     public async Task<IActionResult> Index()
@@ -29,13 +33,13 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Details(int id)
     {
-        var model = await DetailsViewModel.CreateAsync(id, false, _personRepository, _addressRepository);
+        var model = await DetailsViewModel.CreateAsync(id, false, _personRepository, _addressRepository, _personSpecialityRepository, _specialityRepository);
         return View(model);
     }
 
     public async Task<IActionResult> Edit(int id)
     {
-        var model = await DetailsViewModel.CreateAsync(id, true, _personRepository, _addressRepository);
+        var model = await DetailsViewModel.CreateAsync(id, true, _personRepository, _addressRepository, _personSpecialityRepository, _specialityRepository);
         return View("Details", model);
     }
 

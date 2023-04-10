@@ -6,14 +6,14 @@ using MySql.Data.MySqlClient;
 
 namespace DAL;
 
-public class PeopleSpecialityRepository : IPeopleSpecialityRepository
+public class PersonSpecialityRepository : IPersonSpecialityRepository
 {
-    public async Task<List<PeopleSpeciality>> ListAllAsync()
+    public async Task<List<PersonSpeciality>> ListAllAsync()
     {
-        var PeopleSpecialityList = new List<PeopleSpeciality>();
+        var PersonSpecialityList = new List<PersonSpeciality>();
         
         var sql = new StringBuilder();
-        sql.AppendLine("select peoplespeciality.* , speciality.SpecialityName from peoplespeciality inner join speciality on peoplespeciality.specialityId = speciality.Id");
+        sql.AppendLine("select personspeciality.* from personspeciality");
 
         await using (var connection = new MySqlConnection(Config.DbConnectionString))
         {
@@ -24,36 +24,37 @@ public class PeopleSpecialityRepository : IPeopleSpecialityRepository
             var reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
-                PeopleSpecialityList.Add(PopulatePeopleSpeciality(reader));
+                PersonSpecialityList.Add(PopulatePersonSpeciality(reader));
             }
         }
 
-        return PeopleSpecialityList;
+        return PersonSpecialityList;
     }
 
-    public async Task<PeopleSpeciality> GetByIdAsync(int peopleSpecialityId)
+    public async Task<List<PersonSpeciality>> ListByPersonIdAsync(int personId)
     {
-        var peopleSpeciality = new PeopleSpeciality();
+        var personSpecialityList = new List<PersonSpeciality>();
         
         var sql = new StringBuilder();
-        sql.AppendLine("select peoplespeciality.* , speciality.SpecialityName from peoplespeciality inner join speciality on peoplespeciality.specialityId = speciality.Id");
-        sql.AppendLine("WHERE peoplespeciality.Id = @peoplespecialityId");
+        sql.AppendLine("select * from peoplespeciality");
+        sql.AppendLine("WHERE peoplespeciality.PersonId = @personId");
 
         await using (var connection = new MySqlConnection(Config.DbConnectionString))
         {
             await connection.OpenAsync();
 
             var command = new MySqlCommand(sql.ToString(), connection);
-            command.Parameters.AddWithValue("peoplespecialityId", peopleSpecialityId);
+            command.Parameters.AddWithValue("personId", personId);
 
             var reader = await command.ExecuteReaderAsync();
-            if (await reader.ReadAsync())
+            while (await reader.ReadAsync())
             {
-                peopleSpeciality = PopulatePeopleSpeciality(reader);
+                personSpecialityList.Add(PopulatePersonSpeciality(reader));
             }
+            
         }
 
-        return peopleSpeciality;
+        return personSpecialityList;
     }
 
 
@@ -115,16 +116,15 @@ public class PeopleSpecialityRepository : IPeopleSpecialityRepository
     //    }
     //}
 
-    private PeopleSpeciality PopulatePeopleSpeciality(IDataRecord data)
+    private PersonSpeciality PopulatePersonSpeciality(IDataRecord data)
     {
-        var peopleSpeciality = new PeopleSpeciality
+        var personSpeciality = new PersonSpeciality
         {
             Id = int.Parse(data["Id"].ToString()),
-            SpecialityName = data["SpecialityName"].ToString(),
             SpecialityId = int.Parse(data["SpecialityId"].ToString()),
             PersonId = int.Parse(data["PersonId"].ToString()),
 
         };
-        return peopleSpeciality;
+        return personSpeciality;
     }
 }
