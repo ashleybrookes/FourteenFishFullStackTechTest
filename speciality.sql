@@ -19,3 +19,21 @@ Id INT PRIMARY KEY auto_increment,
 PersonID INT NOT NULL,
 SpecialityId INT NOT NULL
 );
+
+/*Adding CONSTRAINTS for how the data should be stored and  */
+ALTER TABLE peoplespeciality
+ADD CONSTRAINT fk_peoplespeciality_speciality
+FOREIGN KEY (SpecialityId)
+REFERENCES speciality(Id);
+
+/*Adding CONSTRAINTS for how the data should be stored */
+ALTER TABLE peoplespeciality
+ADD CONSTRAINT fk_peoplespeciality_people
+FOREIGN KEY (PersonID)
+REFERENCES people(Id);
+
+/*Adding CONSTRAINTS for how the data should be stored */
+ALTER TABLE addresses
+ADD CONSTRAINT fk_addresses_people
+FOREIGN KEY (PersonID)
+REFERENCES people(Id);
