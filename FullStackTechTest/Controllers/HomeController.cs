@@ -48,8 +48,21 @@ public class HomeController : Controller
     {
         await _personRepository.SaveAsync(model.Person);
         await _addressRepository.SaveAsync(model.Address);
+        //Save the personSpeciality from SpecialityCheckBoxList
+        //delete all current db rows for this person
+        await _personSpecialityRepository.DeleteByPersonIdAsync(model.Person.Id);
+        //if the model has checkedboxes insert those ones
+        foreach(CheckBoxModel specialityCheckBox in model.SpecialityCheckBoxList)
+        {
+            if (specialityCheckBox.IsChecked)
+            {
+                await _personSpecialityRepository.InsertAsync(new PersonSpeciality { PersonId = model.Person.Id, SpecialityId = specialityCheckBox.Value });
+            }
+        }
+
         return RedirectToAction("Details", new { id = model.Person.Id });
     }
+
 
     [HttpPost]
     public async Task<IActionResult> Upload(List<IFormFile> files)

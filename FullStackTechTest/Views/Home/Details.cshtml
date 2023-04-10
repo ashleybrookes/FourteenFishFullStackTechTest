@@ -14,6 +14,12 @@
         else {
             <a href="@Url.Action("Details", new { id = Model.Person.Id })" class="btn btn-primary" role="button">Cancel</a>
         }
+        @if (Model.IsEditing)
+        {
+            <div>
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        }
     </div>
 
     @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { @class = "form-inline" }))
@@ -55,21 +61,18 @@
         </div>
 
         <h4>Specialities</h4>
-        @foreach (var item in Model.SpecialityCheckBoxList)
+        @for (var i = 0; i < @Model.SpecialityCheckBoxList.Count(); i++)
         {
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="@item.Value" id="chk@(item.Value)" checked="@item.IsChecked" @(Model.IsEditing ? "" : "disabled") >
-                <label class="form-check-label" for="chk@(item.Value)">
-                    @item.Text
+                <input class="form-check-input" type="checkbox" asp-for="@Model.SpecialityCheckBoxList[i].IsChecked" id="chk@(@Model.SpecialityCheckBoxList[i].Value)" disabled="@(Model.IsEditing == false)"  />
+                <label class="form-check-label" for="chk@(@Model.SpecialityCheckBoxList[i].Value)" asp-for="@Model.SpecialityCheckBoxList[i].IsChecked" >
+                    @Model.SpecialityCheckBoxList[i].Text
                 </label>
+                <input type="hidden" asp-for="@Model.SpecialityCheckBoxList[i].Value" />
+                <input type="hidden" asp-for="@Model.SpecialityCheckBoxList[i].Text" />
             </div>
         }
 
-        @if (Model.IsEditing)
-        {
-            <div>
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        }
+        
     }
 </div>

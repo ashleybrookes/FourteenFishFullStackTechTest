@@ -8,15 +8,8 @@ public interface IPersonSpecialityRepository
 
     Task<List<PersonSpeciality>> ListByPersonIdAsync(int personId);
 
-    //Task<PersonSpeciality> GetByIdAsync(int personSpecialityId);
-
-    //Task<PersonSpeciality> GetByPersonIdAsync(int personId);
-
-    //Task SaveAsync(PersonSpeciality personSpeciality);
-
+    Task DeleteByPersonIdAsync(int personId);
     Task DeleteBySpecialityIdAsync(int specialityId);
 
-    //Task DeleteByPersonIdAsync(int personId);
-
-    //Task<int> InsertAsync(PersonSpeciality personSpeciality);
+    Task<int> InsertAsync(PersonSpeciality personSpeciality);
 }

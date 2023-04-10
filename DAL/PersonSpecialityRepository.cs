@@ -57,26 +57,6 @@ public class PersonSpecialityRepository : IPersonSpecialityRepository
         return personSpecialityList;
     }
 
-
-    //public async Task SaveAsync(Speciality speciality)
-    //{
-    //    var sql = new StringBuilder();
-    //    sql.AppendLine("UPDATE speciality SET");
-    //    sql.AppendLine("SpecialityName = @SpecialityName");
-    //    sql.AppendLine("WHERE Id = @specialityId");
-
-    //    await using (var connection = new MySqlConnection(Config.DbConnectionString))
-    //    {
-    //        await connection.OpenAsync();
-
-    //        var command = new MySqlCommand(sql.ToString(), connection);
-    //        command.Parameters.AddWithValue("SpecialityName", speciality.SpecialityName);
-    //        command.Parameters.AddWithValue("specialityId", speciality.Id);
-
-    //        await command.ExecuteNonQueryAsync();
-    //    }
-    //}
-
     public async Task DeleteBySpecialityIdAsync(int specialityId)
     {
         var sql = new StringBuilder();
@@ -94,26 +74,45 @@ public class PersonSpecialityRepository : IPersonSpecialityRepository
         }
     }
 
-    //public async Task<int> InsertAsync(Speciality speciality)
-    //{
-    //    var sql = new StringBuilder();
-    //    sql.AppendLine("Insert INTO speciality (`SpecialityName`) VALUES (");
-    //    sql.AppendLine("@SpecialityName");
-    //    sql.AppendLine(")");
+    public async Task DeleteByPersonIdAsync(int personId)
+    {
+        var sql = new StringBuilder();
+        sql.AppendLine("DELETE FROM peoplespeciality");
+        sql.AppendLine("WHERE PersonId = @personId");
 
-    //    await using (var connection = new MySqlConnection(Config.DbConnectionString))
-    //    {
-    //        await connection.OpenAsync();
+        await using (var connection = new MySqlConnection(Config.DbConnectionString))
+        {
+            await connection.OpenAsync();
 
-    //        var command = new MySqlCommand(sql.ToString(), connection);
-    //        command.Parameters.AddWithValue("SpecialityName", speciality.SpecialityName);
+            var command = new MySqlCommand(sql.ToString(), connection);
+            command.Parameters.AddWithValue("personId", personId);
 
-    //        await command.ExecuteNonQueryAsync();
+            await command.ExecuteNonQueryAsync();
+        }
+    }
 
-    //        //return the new ID
-    //        return (int)command.LastInsertedId;
-    //    }
-    //}
+    public async Task<int> InsertAsync(PersonSpeciality personSpeciality)
+    {
+        var sql = new StringBuilder();
+        sql.AppendLine("Insert INTO peoplespeciality (`PersonId` , `SpecialityId`) VALUES (");
+        sql.AppendLine("@PersonId,");
+        sql.AppendLine("@SpecialityId");
+        sql.AppendLine(")");
+
+        await using (var connection = new MySqlConnection(Config.DbConnectionString))
+        {
+            await connection.OpenAsync();
+
+            var command = new MySqlCommand(sql.ToString(), connection);
+            command.Parameters.AddWithValue("PersonId", personSpeciality.PersonId);
+            command.Parameters.AddWithValue("SpecialityId", personSpeciality.SpecialityId);
+
+            await command.ExecuteNonQueryAsync();
+
+            //return the new ID
+            return (int)command.LastInsertedId;
+        }
+    }
 
     private PersonSpeciality PopulatePersonSpeciality(IDataRecord data)
     {
