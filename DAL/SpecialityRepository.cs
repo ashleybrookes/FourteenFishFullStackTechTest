@@ -14,6 +14,7 @@ public class SpecialityRepository : ISpecialityRepository
         
         var sql = new StringBuilder();
         sql.AppendLine("SELECT * FROM speciality");
+        sql.AppendLine("Order By SpecialityName");
 
         await using (var connection = new MySqlConnection(Config.DbConnectionString))
         {
@@ -38,7 +39,7 @@ public class SpecialityRepository : ISpecialityRepository
         var sql = new StringBuilder();
         sql.AppendLine("SELECT * FROM speciality");
         sql.AppendLine("WHERE Id = @specialityId");
-
+        
         await using (var connection = new MySqlConnection(Config.DbConnectionString))
         {
             await connection.OpenAsync();
