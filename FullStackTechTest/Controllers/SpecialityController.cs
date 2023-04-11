@@ -55,9 +55,11 @@ namespace FullStackTechTest.Controllers
 
             if (model.speciality.Id > 0)
             {
+                if (model.speciality.SpecialityName.Length > 100) model.speciality.SpecialityName = model.speciality.SpecialityName.Substring(0, 100);
                 await _specialityRepository.SaveAsync(model.speciality);
             } else
             {
+                if (model.speciality.SpecialityName.Length > 100) model.speciality.SpecialityName = model.speciality.SpecialityName.Substring(0, 100);
                 model.speciality.Id = await _specialityRepository.InsertAsync(model.speciality);
             }
 

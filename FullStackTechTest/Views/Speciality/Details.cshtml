@@ -10,32 +10,39 @@
 </script>
 
 <div class="container">
-    <div class="pb-4">
-        @if (!Model.IsInserting || !Model.IsEditing)
-        {
-            <a href="@Url.Action("Index")" class="btn btn-primary" role="button">Back</a>
-        }
-        @if (!Model.IsEditing && !Model.IsInserting)
-        {
-            
-            <a href="@Url.Action("Edit", new { specialityId = Model.speciality.Id })" class="btn btn-primary" role="button">Edit</a>
-        } 
-        @if (Model.IsInserting || Model.IsEditing)
-        {
-            <a href="@Url.Action("Details", new { specialityId = Model.speciality.Id })" class="btn btn-primary" role="button">Cancel</a>
-        }
-        @if (!Model.IsInserting || !Model.IsEditing)
-        {
-
-            <a onclick="DeleteSpeciality(@Model.speciality.Id);" class="btn btn-danger" role="button">Delete</a>
-        }
-
-        
-        
-    </div>
-
     @using (Html.BeginForm("Edit", "Speciality", FormMethod.Post, new { @class = "form-inline" }))
     {
+
+        <div class="pb-4">
+            @if (!Model.IsInserting || !Model.IsEditing)
+            {
+                <a href="@Url.Action("Index")" class="btn btn-primary" role="button">Back</a>
+            }
+            @if (!Model.IsEditing && !Model.IsInserting)
+            {
+            
+                <a href="@Url.Action("Edit", new { specialityId = Model.speciality.Id })" class="btn btn-primary" role="button">Edit</a>
+            } 
+            @if (Model.IsInserting || Model.IsEditing)
+            {
+                <a href="@Url.Action("Details", new { specialityId = Model.speciality.Id })" class="btn btn-primary" role="button">Cancel</a>
+            }
+            @if (!Model.IsInserting)
+            {
+
+                <a onclick="DeleteSpeciality(@Model.speciality.Id);" class="btn btn-danger" role="button">Delete</a>
+            }
+            @if (Model.IsEditing || Model.IsInserting)
+            {
+                
+                <input type="submit" value="Save" class="btn btn-primary" />
+                
+            }
+        
+        
+        </div>
+
+    
         <div class="form-group pb-4" >
             <label>Id:</label>
             <input type="number" name="speciality.id" value="@Model.speciality.Id" class="form-control-plaintext" readonly />
@@ -43,14 +50,9 @@
 
         <div class="form-group pb-1">
             <label>Speciality Name:</label>
-            <input type="text" name="speciality.SpecialityName" value="@Model.speciality.SpecialityName" class="@(Model.IsEditing ? "form-control" : Model.IsInserting ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : Model.IsInserting ? "" : "readonly") />
+            <input type="text" name="speciality.SpecialityName" value="@Model.speciality.SpecialityName" required maxlength="100" class="@(Model.IsEditing ? "form-control" : Model.IsInserting ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : Model.IsInserting ? "" : "readonly") />
         </div>
-        @if (Model.IsEditing || Model.IsInserting)
-        {
-            <div>
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        }
+        
     }
     
 </div>
