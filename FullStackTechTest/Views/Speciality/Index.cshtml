@@ -1,0 +1,26 @@
+﻿@model FullStackTechTest.Models.SpecialityViewModel.IndexViewModel
+
+<div>
+    <h2>Specialities</h2>
+    
+    <a href="@Url.Action("Create")" class="btn btn-primary" role="button">Insert</a>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Speciality Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Speciality in Model.SpecialityList)
+            {
+                <tr class="clickable-row" data-href="@Url.Action("Details", new { specialityId = Speciality.Id})">
+                    <td>@Speciality.Id</td>
+                    <td>@Speciality.SpecialityName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
