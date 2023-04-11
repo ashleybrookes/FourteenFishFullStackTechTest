@@ -68,7 +68,6 @@ namespace FourteenFishFullStackTechTest.Tests
         {
             
             Setup();
-
             _personId = 2;
             //no Data for personSpeciality
             List<PersonSpeciality> personSpecialityList = new List<PersonSpeciality>();
@@ -76,7 +75,7 @@ namespace FourteenFishFullStackTechTest.Tests
             //using a mock to set the result for the ListByPersonIdAsync in PersonSpecialityRepository
             _personSpecialityRepositoryMock.Setup(x => x.ListByPersonIdAsync(_personId)).ReturnsAsync(personSpecialityList);
 
-            //the full list of 
+            //the full list of specialities
             List<Speciality> specialityList = new List<Speciality>()
             {
                 new Speciality() { Id = 1, SpecialityName = "Anaesthetics" },
