@@ -32,27 +32,27 @@
 
 ### How to get started with the app
 
-It is assumed that the laptop running has the following installed:
+It is assumed that the developement computer has the following installed:
 - mySQL database server 
-- visual studio or visual studio code
+- visual studio 2022 or visual studio code
 
-Before running the project you will first need to run the db_changes.sql on your mySQL database. This sql file will add the new tables "speciality", "personspeciality", "foreign keys" and the seed data for the speciality table. It is assumed that you already have seed.sql already in your database.
+Before running the app you first need to run the db_changes.sql on your mySQL database. This sql file will add the new tables "speciality", "peoplenspeciality", as well as foreign keys constraints and the seed data for the speciality table. It is assumed that you already have seed.sql already in your database.
 
 You will need to set the DB_CONNECTION_STRING to you local mySQL database as an environment variable. In visual studio 2022 right click on the FullStackTechTest project goto properties then Debug.
 
-### Guide Feature 1 - Import Data
+### Guide to Import Data Feature
 
-On the home page use the "choose file" button press this button to open the file dialogue then select the file with the import data in, this needs to be a .json file type. Not using a json filetype will cause an error.
+On the home page you will see the "choose file" button. Click on this button to open the file dialogue, then select the file with the import json data, this needs to be a .json file type. Not using a json filetype will cause an error.
 
 After your file has been uploaded you will see the new people in the table on the home page.
 
-People with the same GMC number in the import file will update the people and address data on the system.
+People with the same GMC number in the import file will update the people and address data on the app.
 
-### Guide Feature 2 - Speciality
+### Guide to Speciality Feature
 
-In the header you will see the speciality page. This page lists all the specialities in the database, they can be deleted, edited and new specialities can be added.
+In the header you will see the speciality page. This page lists all the specialities in the app, they can be deleted, edited and inserted.
 
-To add a speciality for a person go to the person details page e.g. /Home/Details/1 , click on edit, then use the checkboxes to select the speciality you want to apply/remove for that person. But dont forget to hit save :floppy_disk:
+To assign a speciality to a person go to the person details page e.g. /Home/Details/1 , click on edit, then use the checkboxes to select the speciality you want to apply/remove for that person. Now click on the save button.
 
 The Speciality Name is limited to 100 characters in length.
 
