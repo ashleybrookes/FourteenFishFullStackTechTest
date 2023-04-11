@@ -7,17 +7,13 @@ jQuery(document).ready(function($) {
     $(".clickable-row").click(function() {
         window.location = $(this).data("href");
     });
-
-    
 });
 
 function IsInt(value) {
     if (isNaN(value)) {
         return false;
     }
-
     return Number.isInteger(value);
-
 } 
 
 function DeleteSpeciality(Id) {
@@ -33,18 +29,17 @@ function DeleteSpeciality(Id) {
 
     if (confirm("Are you sure you want to delete this ?")) {
         //call the http delete url which will delete the specialty and personspeciality data
-        $.ajax({
-            url: "/Speciality/Delete/" + Id,
-            type: "Delete",
-            success: function (data) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "/Speciality/Delete/" + Id);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
                 // Re-direct to speciality home page
                 window.location.replace("/Speciality");
-            },
-            error: function (data) {
-                // Failed
-                //alert("Delete failed");
+            } else {
+                alert("Delete failed");
             }
-        });
+        };
+        xhr.send();
     }
     
 };
