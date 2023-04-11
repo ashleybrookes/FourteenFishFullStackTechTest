@@ -9,21 +9,18 @@ namespace FourteenFishFullStackTechTest.Tests
         private Mock<ISpecialityRepository> _specialityRepositoryMock;
 
         private int _personId = 1;
+
+        /// <summary>
+        /// Setting up the Mock respositories
+        /// </summary>
         [SetUp]
         public void Setup()
         {
             _personSpecialityRepositoryMock = new Mock<IPersonSpecialityRepository>();
             _specialityRepositoryMock = new Mock<ISpecialityRepository>();
-
-            
         }
         /// <summary>
-        /// This is a unit test that isolates the DetailsView.CreateCheckBoxList method from the data access layer. I am able to do this because I am using Mocking to mock the data access.
-        /// The Mock allows me to create the data instead of calling the database.
-        /// The tests done in this are 
-        /// Testing for a null SpecialityCheckBoxList
-        /// Testing for 6 rows (the mocked data is 6 speciality rows)
-        /// Testing the list of contains the correct data in each of the 6 rows
+        /// Testing DetailsViewModel.CreateCheckBoxList - asserting not returning null , checkboxmodel count is the same as speciality count, with 2 rows personspeciality data asserting true Ischecked in for the correct CheckboxModel items
         /// </summary>
         /// <returns></returns>
         [Test]
@@ -63,12 +60,7 @@ namespace FourteenFishFullStackTechTest.Tests
         }
 
         /// <summary>
-        /// This is a unit test that isolates the DetailsView.CreateCheckBoxList method from the data access layer. I am able to do this because I am using Mocking to mock the data access.
-        /// The Mock allows me to create the data instead of calling the database.
-        /// The tests done in this are 
-        /// Testing for a null SpecialityCheckBoxList
-        /// Testing for 6 rows (the mocked data is 6 speciality rows)
-        /// Testing the list of contains the correct data in each of the 6 rows
+        /// Testing DetailsViewModel.CreateCheckBoxList - asserting not returning null , checkboxmodel count is the same as speciality count, with no personspeciality data asserting false Ischecked in all CheckboxModel
         /// </summary>
         /// <returns></returns>
         [Test]
