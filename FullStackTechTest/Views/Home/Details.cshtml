@@ -5,26 +5,27 @@
 }
 
 <div class="container">
-    <h2>Profile</h2>
-    <div class="pb-4">
-        @if (!Model.IsEditing)
-        {
-            <a href="@Url.Action("Index")" class="btn btn-primary" role="button">Back</a>
-            <a href="@Url.Action("Edit", new { id = Model.Person.Id })" class="btn btn-primary" role="button">Edit</a>
-        }
-        else {
-            <a href="@Url.Action("Details", new { id = Model.Person.Id })" class="btn btn-primary" role="button">Cancel</a>
-        }
-        @if (Model.IsEditing)
-        {
-            <div>
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        }
-    </div>
-
     @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { @class = "form-inline" }))
     {
+        <h2>Profile</h2>
+        <div class="pb-4">
+            @if (!Model.IsEditing)
+            {
+                <a href="@Url.Action("Index")" class="btn btn-primary" role="button">Back</a>
+                <a href="@Url.Action("Edit", new { id = Model.Person.Id })" class="btn btn-primary" role="button">Edit</a>
+            }
+            else {
+                <a href="@Url.Action("Details", new { id = Model.Person.Id })" class="btn btn-primary" role="button">Cancel</a>
+            }
+            @if (Model.IsEditing)
+            {
+                <div>
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+
+    
         /* The hidden inputs ensure the address.Id and address.personId are posted within model in the edit method */
         <input type="hidden" name="address.id" value="@Model.Address.Id" />
         <input type="hidden" name="address.personId" value="@Model.Address.PersonId" />
