@@ -10,6 +10,8 @@
 </script>
 
 <div class="container">
+    @using (Html.BeginForm("Edit", "Speciality", FormMethod.Post, new { @class = "form-inline" }))
+    {
     <div class="pb-4">
         @if (!Model.IsInserting || !Model.IsEditing)
         {
@@ -28,24 +30,19 @@
         {
 
             <a onclick="DeleteSpeciality(@Model.speciality.Id);" class="btn btn-danger" role="button">Delete</a>
-        }
-
-        
-        
+        }   
     </div>
 
-    @using (Html.BeginForm("Edit", "Speciality", FormMethod.Post, new { @class = "form-inline" }))
-    {
-        <div class="form-group pb-4" >
-            <label>Id:</label>
-            <input type="number" name="speciality.id" value="@Model.speciality.Id" class="form-control-plaintext" readonly />
-        </div>
+    <div class="form-group pb-4" >
+        <label>Id:</label>
+        <input type="number" name="speciality.id" value="@Model.speciality.Id" class="form-control-plaintext" readonly />
+    </div>
 
-        <div class="form-group pb-1">
-            <label>Speciality Name:</label>
-            <input type="text" name="speciality.SpecialityName" value="@Model.speciality.SpecialityName" class="@(Model.IsEditing ? "form-control" : Model.IsInserting ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : Model.IsInserting ? "" : "readonly") />
-        </div>
-        @if (Model.IsEditing || Model.IsInserting)
+    <div class="form-group pb-1">
+        <label>Speciality Name:</label>
+        <input type="text" name="speciality.SpecialityName" value="@Model.speciality.SpecialityName" class="@(Model.IsEditing ? "form-control" : Model.IsInserting ? "form-control" : "form-control-plaintext")" @(Model.IsEditing ? "" : Model.IsInserting ? "" : "readonly") />
+    </div>
+    @if (Model.IsEditing || Model.IsInserting)
         {
             <div>
                 <input type="submit" value="Save" class="btn btn-primary" />
