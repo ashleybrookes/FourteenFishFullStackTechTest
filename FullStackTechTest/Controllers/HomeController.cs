@@ -102,10 +102,8 @@ public class HomeController : Controller
                     return Redirect("Index");
                 } else
                 {
-                    return BadRequest();
+                    return BadRequest("File was not a JSON format");
                 }
-
-
             } else
             {
                 return NoContent();
