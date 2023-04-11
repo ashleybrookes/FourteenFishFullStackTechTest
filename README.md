@@ -42,7 +42,7 @@ You will need to set the DB_CONNECTION_STRING to you local mySQL database as an 
 
 ### Guide to Import Data Feature
 
-On the home page you will see the "choose file" button. Click on this button to open the file dialogue, then select the file with the import json data, this needs to be a .json file type. Not using a json filetype will cause an error.
+On the home page you will see the "choose file" button. Click on this button to open the file dialogue, then select the file with the import json data, this needs to be a .json file type. Only .json file types are supported.
 
 After your file has been uploaded you will see the new people in the table on the home page.
 
@@ -59,6 +59,5 @@ The Speciality Name is limited to 100 characters in length.
 ### Future Implementations
 - Adding a spinner animation after clicking a button that saves/edits/imports/deletes.
 - More unit tests to ensure robustness across the entire app.
-- Authentication to secure the admin functionality of the app from the public
-- Show the multiple addresses
+- Authentication to secure the admin functionality from the public
 - Validation messages returned back from the controller requests and displayed a meaningful message to the user about the problem with the input. 
