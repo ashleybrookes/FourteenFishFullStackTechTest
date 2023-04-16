@@ -38,7 +38,7 @@ It is assumed that the developement computer has the following installed:
 
 Before running the app you first need to run the db_changes.sql on your mySQL database. This sql file will add the new tables "speciality", "peoplenspeciality", as well as foreign keys constraints and the seed data for the speciality table. It is assumed that you already have seed.sql already in your database.
 
-You will need to set the DB_CONNECTION_STRING to you local mySQL database as an environment variable. In visual studio 2022 right click on the FullStackTechTest project goto properties then Debug.
+You will need to set the DB_CONNECTION_STRING to your local mySQL database as an environment variable. In visual studio 2022 right click on the FullStackTechTest project go to properties then Debu, you will see the environment variables there.
 
 ### Guide to Import Data Feature
 
@@ -57,7 +57,10 @@ To assign a speciality to a person go to the person details page e.g. /Home/Deta
 The Speciality Name is limited to 100 characters in length.
 
 ### Future Implementations
-- Adding a spinner animation after clicking a button that saves/edits/imports/deletes.
+- After the file has been imported the user could be show a detailed breakdown of the changes to the person and address data on the system. For each person imported it would say if they were inserting or updating. The user would then click "Accept changes" or "Discard".
+- Add GMC to Home/Index table view - this is the real Id for each person.
+- Validation messages returned back from the controller requests and displayed a meaningful message to the user about the problem with the input. 
+- Adding spinner animations after clicking a button that saves/edits/imports/deletes. This tell the user the system is dealing with there request.
 - More unit tests to ensure robustness across the entire app.
 - Authentication to secure the admin functionality from the public
-- Validation messages returned back from the controller requests and displayed a meaningful message to the user about the problem with the input. 
+
